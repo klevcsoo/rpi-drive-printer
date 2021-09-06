@@ -2,7 +2,7 @@ import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 
 const DRIVE_PRINT_DIR_ID = '1yX7U0cUoT-UntZwtP8hkRJ5QZFkPdKWs';
-const CONTENT_CHECK_INTERVAL = 8000; //ms
+const CONTENT_CHECK_INTERVAL = process.env.NODE_ENV === 'production' ? 8000 : 1000;
 
 export function onPrintDirContentChange(
   auth: OAuth2Client, callback: (files: string[]) => void
