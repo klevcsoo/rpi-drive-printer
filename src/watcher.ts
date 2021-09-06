@@ -25,8 +25,8 @@ export function onPrintDirContentChange(
       const difference = newContent.filter((file) => !oldContent.includes(file));
       oldContent = [ ...newContent ];
 
-      if (i !== 0 && !!difference) {
-        console.log('New files uploaded:', difference);
+      if (i !== 0 && !!difference.length) {
+        console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
         callback(difference);
       }
 
