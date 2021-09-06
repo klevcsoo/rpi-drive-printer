@@ -10,7 +10,7 @@ export function onPrintDirContentChange(
   const drive = google.drive({ version: 'v3', auth: auth });
 
   let oldContent: string[] = [];
-  let i = 0;
+  let first = process.env.NODE_ENV === 'production';
 
   setInterval(() => {
     drive.files.list({
@@ -25,12 +25,12 @@ export function onPrintDirContentChange(
       const difference = newContent.filter((file) => !oldContent.includes(file));
       oldContent = [ ...newContent ];
 
-      if (i !== 0 && !!difference.length) {
+      if (!first && !!difference.length) {
         console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
         callback(difference);
       }
 
-      i++;
+      first = false;
     });
   }, CONTENT_CHECK_INTERVAL);
 }
