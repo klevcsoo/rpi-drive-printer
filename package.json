@@ -12,8 +12,10 @@
   "author": "Keve Lajsz",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^16.7.10",
     "googleapis": "^85.0.0",
     "readline": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.11"
   }
 }
