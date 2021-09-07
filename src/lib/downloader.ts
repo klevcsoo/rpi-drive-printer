@@ -1,10 +1,10 @@
-import { writeFileSync } from "fs";
+import { PathLike, writeFileSync } from "fs";
 import { drive_v3 } from "googleapis";
 import { join as joinPath } from 'path';
 import { TEMP_DOWNLOAD_DIR } from "../constants";
 
 export async function downloadDriveFile(drive: drive_v3.Drive, fileId: string) {
-  return new Promise<string>((resolve, reject) => {
+  return new Promise<PathLike>((resolve, reject) => {
     drive.files.get({
       fileId: fileId,
       alt: 'media'
