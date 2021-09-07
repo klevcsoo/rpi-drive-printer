@@ -24,7 +24,7 @@ export function onPrintDirContentChange(
       oldContent = [ ...newContent ];
 
       if ((isProdBuild ? i !== 0 : true) && !!difference.length) {
-        console.log(`\n[${ new Date().toLocaleString() }] New files uploaded:`, difference);
+        console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
         callback(drive, difference);
       }
 
