@@ -1,9 +1,9 @@
-import { google } from 'googleapis';
+import { drive_v3, google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import isProdBuild, { CONTENT_CHECK_INTERVAL, DRIVE_PRINT_DIR_ID } from './constants';
 
 export function onPrintDirContentChange(
-  auth: OAuth2Client, callback: (files: string[]) => void
+  auth: OAuth2Client, callback: (drive: drive_v3.Drive, files: string[]) => void
 ) {
   const drive = google.drive({ version: 'v3', auth: auth });
 
@@ -25,7 +25,7 @@ export function onPrintDirContentChange(
 
       if (!first && !!difference.length) {
         console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
-        callback(difference);
+        callback(drive, difference);
       }
 
       first = false;

@@ -12,8 +12,7 @@ if (!existsSync(TEMP_DOWNLOAD_DIR)) {
 authorizeGoogleAPIs().then((auth) => {
   console.log(`Listening to changes. Client ID is ${ auth._clientId }.`);
 
-  const drive = google.drive({ version: 'v3', auth: auth });
-  onPrintDirContentChange(auth, (files) => {
+  onPrintDirContentChange(auth, (drive, files) => {
     for (const id of files) {
       drive.files.get({
         fileId: id,
