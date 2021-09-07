@@ -14,6 +14,6 @@ cp -r "./node_modules" "./dist/"
 cp "./google_api_credentials.json" "./dist/"
 find "./dist/src" -type f -name "*.js.map" -delete
 
-echo "#!/bin/sh\nNODE_ENV=production node src/main.js" > "./dist/run.sh"
+echo "#!/bin/sh\nclear\nNODE_ENV=production node src/main.js" > "./dist/run.sh"
 
 echo "Application packaged"
