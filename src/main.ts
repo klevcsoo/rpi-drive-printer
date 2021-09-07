@@ -2,7 +2,7 @@ import { authorizeGoogleAPIs } from './googleAuth';
 import { onPrintDirContentChange } from './lib/watcher';
 import { existsSync, mkdirSync } from 'fs';
 import { TEMP_DOWNLOAD_DIR } from './constants';
-import { downloadDriveFile } from './lib/downloader';
+import { downloadDriveFile } from './lib/drive';
 import { addDocumentToPrintQueue } from './lib/printer';
 
 if (!existsSync(TEMP_DOWNLOAD_DIR)) {
