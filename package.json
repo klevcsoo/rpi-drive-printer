@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node . --enable-source-maps"
+    "start": "node . --enable-source-maps",
+    "prepack": "npm run build",
+    "pack": "sh pack.sh"
   },
   "keywords": [],
   "author": "Keve Lajsz",
