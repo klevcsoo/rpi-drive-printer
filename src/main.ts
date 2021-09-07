@@ -1,6 +1,5 @@
 import { authorizeGoogleAPIs } from './googleAuth';
 import { onPrintDirContentChange } from './watcher';
-import { google } from 'googleapis';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join as joinPath } from 'path';
 import { TEMP_DOWNLOAD_DIR } from './constants';
