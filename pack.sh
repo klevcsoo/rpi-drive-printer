@@ -10,7 +10,9 @@ fi
 mkdir "./dist"
 mkdir "./dist/src"
 cp -r "./build/." "./dist/src/"
+cp -r "./node_modules" "./dist/"
 cp "./google_api_credentials.json" "./dist/"
+find "./dist/src" -type f -name "*.js.map" -delete
 
 echo "#!/bin/sh\nNODE_ENV=production node src/main.js" > "./dist/run.sh"
 
