@@ -27,9 +27,12 @@ export function onPrintDirContentChange(
         console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
         callback(drive, difference);
       }
-
-      process.stdout.write(`Last check ${ i % (CONTENT_CHECK_INTERVAL / 1000) } secs ago\r`);
-      i++;
     });
+
+    setInterval(() => {
+      i++;
+      const secs = i % (CONTENT_CHECK_INTERVAL / 1000);
+      process.stdout.write(`Last check ${ secs } ${ secs === 1 ? 'sec' : 'secs' } ago\r`);
+    }, 1000);
   }, CONTENT_CHECK_INTERVAL);
 }
