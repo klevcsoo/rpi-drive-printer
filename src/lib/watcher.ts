@@ -8,7 +8,7 @@ export function onPrintDirContentChange(
   const drive = google.drive({ version: 'v3', auth: auth });
 
   let oldContent: string[] = [];
-  let first = isProdBuild;
+  let i = 0;
 
   setInterval(() => {
     drive.files.list({
@@ -23,12 +23,13 @@ export function onPrintDirContentChange(
       const difference = newContent.filter((file) => !oldContent.includes(file));
       oldContent = [ ...newContent ];
 
-      if (!first && !!difference.length) {
-        console.log(`[${ new Date().toLocaleString() }] New files uploaded:`, difference);
+      if ((isProdBuild ? i !== 0 : true) && !!difference.length) {
+        console.log(`\n[${ new Date().toLocaleString() }] New files uploaded:`, difference);
         callback(drive, difference);
       }
 
-      first = false;
+      process.stdout.write(`Last check ${ i % (CONTENT_CHECK_INTERVAL / 1000) } secs ago\r`);
+      i++;
     });
   }, CONTENT_CHECK_INTERVAL);
 }

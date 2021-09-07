@@ -8,4 +8,4 @@ export const TOKEN_PATH = joinPath(__dirname, '../google_api_token.json');
 export const CRED_PATH = joinPath(__dirname, '../google_api_credentials.json');
 export const SCOPES = [ 'https://www.googleapis.com/auth/drive' ];
 export const DRIVE_PRINT_DIR_ID = '1yX7U0cUoT-UntZwtP8hkRJ5QZFkPdKWs';
-export const CONTENT_CHECK_INTERVAL = process.env.NODE_ENV === 'production' ? 8000 : 1000;
+export const CONTENT_CHECK_INTERVAL = process.env.NODE_ENV === 'production' ? 8000 : 2000;
