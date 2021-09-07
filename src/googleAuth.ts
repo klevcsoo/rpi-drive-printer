@@ -1,12 +1,8 @@
 import { readFile, readFileSync, writeFileSync } from 'fs';
-import { join as joinPath } from 'path';
 import readline from 'readline';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
-
-const TOKEN_PATH = joinPath(__dirname, '../google_api_token.json');
-const CRED_PATH = joinPath(__dirname, '../google_api_credentials.json');
-const SCOPES = [ 'https://www.googleapis.com/auth/drive' ];
+import { CRED_PATH, SCOPES, TOKEN_PATH } from './constants';
 
 export async function authorizeGoogleAPIs() {
   const credentials = JSON.parse(readFileSync(CRED_PATH).toString('utf-8'));

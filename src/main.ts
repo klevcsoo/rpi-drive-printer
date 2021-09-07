@@ -3,8 +3,7 @@ import { onPrintDirContentChange } from './watcher';
 import { google } from 'googleapis';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join as joinPath } from 'path';
-
-const TEMP_DOWNLOAD_DIR = joinPath(__dirname, '../temp');
+import { TEMP_DOWNLOAD_DIR } from './constants';
 
 if (!existsSync(TEMP_DOWNLOAD_DIR)) {
   mkdirSync(TEMP_DOWNLOAD_DIR);
@@ -24,9 +23,10 @@ authorizeGoogleAPIs().then((auth) => {
 
         const file = (response.data as any) as Blob;
         const ext = file.type.split('/')[ 1 ];
+        const filePath = joinPath(TEMP_DOWNLOAD_DIR, `${ id }.${ ext }`);
 
         file.arrayBuffer().then((ab) => {
-          writeFileSync(joinPath(TEMP_DOWNLOAD_DIR, `${ id }.${ ext }`), Buffer.from(ab));
+          writeFileSync(filePath, Buffer.from(ab));
         });
       });
     }

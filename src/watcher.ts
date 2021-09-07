@@ -1,8 +1,6 @@
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
-
-const DRIVE_PRINT_DIR_ID = '1yX7U0cUoT-UntZwtP8hkRJ5QZFkPdKWs';
-const CONTENT_CHECK_INTERVAL = process.env.NODE_ENV === 'production' ? 8000 : 1000;
+import isProdBuild, { CONTENT_CHECK_INTERVAL, DRIVE_PRINT_DIR_ID } from './constants';
 
 export function onPrintDirContentChange(
   auth: OAuth2Client, callback: (files: string[]) => void
@@ -10,7 +8,7 @@ export function onPrintDirContentChange(
   const drive = google.drive({ version: 'v3', auth: auth });
 
   let oldContent: string[] = [];
-  let first = process.env.NODE_ENV === 'production';
+  let first = isProdBuild;
 
   setInterval(() => {
     drive.files.list({
