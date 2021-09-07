@@ -1,8 +1,8 @@
 import { authorizeGoogleAPIs } from './googleAuth';
 import { onPrintDirContentChange } from './lib/watcher';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
-import { join as joinPath } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 import { TEMP_DOWNLOAD_DIR } from './constants';
+import { downloadDriveFile } from './lib/downloader';
 
 if (!existsSync(TEMP_DOWNLOAD_DIR)) {
   mkdirSync(TEMP_DOWNLOAD_DIR);
@@ -11,22 +11,10 @@ if (!existsSync(TEMP_DOWNLOAD_DIR)) {
 authorizeGoogleAPIs().then((auth) => {
   console.log(`Listening to changes. Client ID is ${ auth._clientId }.`);
 
-  onPrintDirContentChange(auth, (drive, files) => {
+  onPrintDirContentChange(auth, async (drive, files) => {
     for (const id of files) {
-      drive.files.get({
-        fileId: id,
-        alt: 'media'
-      }, { responseType: 'blob' }, (err, response) => {
-        if (!!err || !response) { console.error(err); return; }
-
-        const file = (response.data as any) as Blob;
-        const ext = file.type.split('/')[ 1 ];
-        const filePath = joinPath(TEMP_DOWNLOAD_DIR, `${ id }.${ ext }`);
-
-        file.arrayBuffer().then((ab) => {
-          writeFileSync(filePath, Buffer.from(ab));
-        });
-      });
+      const filePath = await downloadDriveFile(drive, id);
+      console.log(filePath);
     }
   });
 }).catch((err) => {
