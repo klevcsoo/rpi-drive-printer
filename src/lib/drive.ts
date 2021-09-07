@@ -22,3 +22,14 @@ export async function downloadDriveFile(drive: drive_v3.Drive, fileId: string) {
     });
   });
 }
+
+export async function deleteDriveFile(drive: drive_v3.Drive, fileId: string) {
+  return new Promise<void>((resolve, reject) => {
+    drive.files.delete({
+      fileId: fileId
+    }, (err, response) => {
+      if (!!err || !response) { reject(err); return; }
+      resolve();
+    });
+  });
+}

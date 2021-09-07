@@ -2,7 +2,7 @@ import { authorizeGoogleAPIs } from './googleAuth';
 import { onPrintDirContentChange } from './lib/watcher';
 import { existsSync, mkdirSync } from 'fs';
 import { TEMP_DOWNLOAD_DIR } from './constants';
-import { downloadDriveFile } from './lib/drive';
+import { deleteDriveFile, downloadDriveFile } from './lib/drive';
 import { addDocumentToPrintQueue } from './lib/printer';
 
 if (!existsSync(TEMP_DOWNLOAD_DIR)) {
@@ -19,7 +19,10 @@ authorizeGoogleAPIs().then((auth) => {
       console.log(`Downloaded to ${ filePath }`);
       addDocumentToPrintQueue(filePath).then(() => {
         console.log('Printing document...');
-        console.log('------------------------------');
+        deleteDriveFile(drive, id).then(() => {
+          console.log(`Deleted file from Drive with ID ${ id }`);
+          console.log('------------------------------');
+        }).catch((err) => console.error(err));
       }).catch((err) => console.error(err));
     }
   });
